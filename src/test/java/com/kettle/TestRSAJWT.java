@@ -9,6 +9,8 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class TestRSAJWT {
@@ -18,7 +20,7 @@ public class TestRSAJWT {
         //生成jwt令牌的载荷信息
         Map userinfo = new HashMap() {{ //新写法：jdk1.8新特性
             put("account", "jack");
-            put("auth", "a,b,c,d");
+            put("auths", Stream.of("a","b","c","d").collect(Collectors.toList()));
         }};
         //获取私钥：将生成的私钥保存的文件转换为私钥路径对象
         String path = ResourceUtils.getFile("classpath:rsa.pri").getPath();

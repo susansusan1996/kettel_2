@@ -92,16 +92,16 @@ public class HrmBasicAuthenticationFilter extends BasicAuthenticationFilter {
             Map map = (Map) JwtUtils.getInfoFromToken(token, RsaUtils.getPublicKey(ResourceUtils.getFile("classpath:rsa.pub").getPath()),
                     Map.class);
 
-            //取出token中的权限信息
-            List<Map> auths = (List) map.get("auths");
+            //取出token中的權限 (先註解，暫時不會用到)
+//            List<Map> auths = (List) map.get("auths");
 
-            //定义一个临时的集合
+            //臨時集合
             List auth_tmp = new ArrayList();
 
-            for (Map auth : auths) {
-                auth_tmp.add(auth.get("authority"));
-            }
-            //封装成权限集合
+//            for (Map auth : auths) {
+//                auth_tmp.add(auth.get("authority"));
+//            }
+            //封裝成權限集合
             Collection<? extends GrantedAuthority> grantedAuthorities =
                     AuthorityUtils.commaSeparatedStringToAuthorityList(StringUtils.join(auth_tmp, ','));
             //解析出jwt令牌中携带的用户权限列表，然后将其重写按钮security的要求，封装为security能识别的token令牌
