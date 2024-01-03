@@ -1,7 +1,7 @@
 package com.org.kettle.config;
 
-import com.org.kettle.Filter.HrmBasicAuthenticationFilter;
-import com.org.kettle.Filter.HrmUserNamePasswordAuthenticationFilter;
+import com.org.kettle.Filter.MyBasicAuthenticationFilter;
+import com.org.kettle.Filter.MyUserNamePasswordAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true) //開啟@preAuthorized註解
@@ -36,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .failureHandler(new MyAuthenticationFailureHandler())
                 .and().logout().permitAll();
                 //将自定义的2个filter重新添加到 Security
-        http.addFilterBefore(new HrmUserNamePasswordAuthenticationFilter(authenticationManagerBean()), HrmUserNamePasswordAuthenticationFilter.class); //簽發jwt
-        http.addFilterAt(new HrmBasicAuthenticationFilter(authenticationManager()), HrmBasicAuthenticationFilter.class); //驗證jwt
+        http.addFilterBefore(new MyUserNamePasswordAuthenticationFilter(authenticationManagerBean()), MyUserNamePasswordAuthenticationFilter.class); //簽發jwt
+        http.addFilterAt(new MyBasicAuthenticationFilter(authenticationManager()), MyBasicAuthenticationFilter.class); //驗證jwt
     }
 }
